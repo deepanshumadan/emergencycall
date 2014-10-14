@@ -2,12 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.help.dmadan.emergencycall">
 
+    <permission
+        android:name="com.help.dmadan.emergencycall.Activity.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.help.dmadan.emergencycall.Activity.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -23,10 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.help.dmadan.emergencycall.Activity.UserSettingActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name="com.help.dmadan.emergencycall.Activity.NearByPlacesActivity"
+            android:label="@string/app_name"></activity>
         <!-- Google Maps -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

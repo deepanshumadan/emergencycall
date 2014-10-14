@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.help.dmadan.emergencycall.R;
 public class MainActivity extends Activity implements LocationListener {
 
 	ImageButton mImgButton;
+	Button mButton;
 	LocationManager mLocationManager;
 	private double mLong, mLat;
 	private String mProvider;
@@ -67,9 +69,24 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		addListenerOnButton();
+		addListenerOnImageButton();
 	}
 
 	private void addListenerOnButton() {
+		mButton = (Button) findViewById
+			(R.id.button1);
+
+		mButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent i = new Intent(MainActivity.this, NearByPlacesActivity.class);
+				startActivity(i);
+			}
+		});
+
+	}
+
+	private void addListenerOnImageButton() {
 
 		mImgButton = (ImageButton) findViewById
 			(R.id.imageButton1);
