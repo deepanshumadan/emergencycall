@@ -11,11 +11,15 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -25,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -32,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.help.dmadan.emergencycall.ECUtilities.ParseJSON;
 import com.help.dmadan.emergencycall.R;
@@ -124,7 +130,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 					StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
 					sb.append("location=" + mLatitude + "," + mLongitude);
-					sb.append("&radius=5000");
+					sb.append("&radius=10000");
 					sb.append("&types=" + type);
 					sb.append("&sensor=true");
 					sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
@@ -137,9 +143,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 				}
 			});
-
 		}
-
 	}
 
 	/**
@@ -260,16 +264,16 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				HashMap<String, String> hmPlace = list.get(i);
 
 				// Getting latitude of the place
-				double lat = Double.parseDouble(hmPlace.get("lat"));
+				final double lat = Double.parseDouble(hmPlace.get("lat"));
 
 				// Getting longitude of the place
-				double lng = Double.parseDouble(hmPlace.get("lng"));
+				final double lng = Double.parseDouble(hmPlace.get("lng"));
 
 				// Getting name
 				String name = hmPlace.get("place_name");
 
 				// Getting vicinity
-				String vicinity = hmPlace.get("vicinity");
+				final String vicinity = hmPlace.get("vicinity");
 
 				LatLng latLng = new LatLng(lat, lng);
 
@@ -282,8 +286,59 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 				// Placing a marker on the touched position
 				mGoogleMap.addMarker(markerOptions);
+				mGoogleMap.setOnMarkerClickListener(
+					new GoogleMap.OnMarkerClickListener() {
+						@Override
+						public boolean onMarkerClick(Marker marker) {
+							openAlert(getDestinationString(marker.getTitle()));
+							return false;
+						}
+					}
+				);
 			}
 		}
+	}
+
+	private String getDestinationString(String vicinity) {
+		return vicinity.replace(" ", "+");
+	}
+
+	private void openAlert(final String dest) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NearByPlacesActivity.this);
+
+		alertDialogBuilder.setTitle(this.getTitle() + " decision");
+		alertDialogBuilder.setMessage("Are you sure?");
+		// set positive button: Yes message
+		alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				String mapURL = "http://maps.google.com/maps?saddr=" + mLatitude + "," + mLongitude + "&daddr=" + dest;
+				Log.d("mapurl", mapURL);
+				// go to a new activity of the app
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+					Uri.parse(mapURL));
+				startActivity(intent);
+			}
+		});
+		// set negative button: No message
+		alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// cancel the alert box and put a Toast to the user
+				dialog.cancel();
+				Toast.makeText(getApplicationContext(), "You chose a negative answer",
+					Toast.LENGTH_LONG).show();
+			}
+		});
+		// set neutral button: Exit the app message
+		alertDialogBuilder.setNeutralButton("Exit the app", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// exit the app and go to the HOME
+				NearByPlacesActivity.this.finish();
+			}
+		});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		// show alert
+		alertDialog.show();
 	}
 
 	@Override
