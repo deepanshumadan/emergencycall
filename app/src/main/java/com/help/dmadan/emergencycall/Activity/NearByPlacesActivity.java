@@ -290,7 +290,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 					new GoogleMap.OnMarkerClickListener() {
 						@Override
 						public boolean onMarkerClick(Marker marker) {
-							openAlert(getDestinationString(marker.getTitle()));
+							openAlert(marker.getTitle());
 							return false;
 						}
 					}
@@ -303,13 +303,14 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		return vicinity.replace(" ", "+");
 	}
 
-	private void openAlert(final String dest) {
+	private void openAlert(final String title) {
+		final String dest = getDestinationString(title);
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NearByPlacesActivity.this);
 
-		alertDialogBuilder.setTitle(this.getTitle() + " decision");
-		alertDialogBuilder.setMessage("Are you sure?");
-		// set positive button: Yes message
-		alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setTitle(this.getTitle() + "Place near me!");
+		alertDialogBuilder.setMessage(title);
+		// set get direction button
+		alertDialogBuilder.setPositiveButton("Get Direction", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				String mapURL = "http://maps.google.com/maps?saddr=" + mLatitude + "," + mLongitude + "&daddr=" + dest;
 				Log.d("mapurl", mapURL);
@@ -319,19 +320,17 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				startActivity(intent);
 			}
 		});
-		// set negative button: No message
-		alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		// set negative button
+		alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				// cancel the alert box and put a Toast to the user
+				// cancel the alert box
 				dialog.cancel();
-				Toast.makeText(getApplicationContext(), "You chose a negative answer",
-					Toast.LENGTH_LONG).show();
 			}
 		});
-		// set neutral button: Exit the app message
+		// set neutral button: Exit the activity message
 		alertDialogBuilder.setNeutralButton("Exit the app", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				// exit the app and go to the HOME
+				// exit the screen and go to the HOME screen
 				NearByPlacesActivity.this.finish();
 			}
 		});
