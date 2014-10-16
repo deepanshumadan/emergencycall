@@ -39,6 +39,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.help.dmadan.emergencycall.ECUtilities.CustomDialog;
 import com.help.dmadan.emergencycall.ECUtilities.ParseJSON;
 import com.help.dmadan.emergencycall.R;
 
@@ -290,54 +291,13 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 					new GoogleMap.OnMarkerClickListener() {
 						@Override
 						public boolean onMarkerClick(Marker marker) {
-							openAlert(marker.getTitle());
+							new CustomDialog().openAlert(marker.getTitle(), mLatitude, mLongitude, getApplicationContext(), NearByPlacesActivity.this);
 							return false;
 						}
 					}
 				);
 			}
 		}
-	}
-
-	private String getDestinationString(String vicinity) {
-		return vicinity.replace(" ", "+");
-	}
-
-	private void openAlert(final String title) {
-		final String dest = getDestinationString(title);
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(NearByPlacesActivity.this);
-
-		alertDialogBuilder.setTitle(this.getTitle() + "Place near me!");
-		alertDialogBuilder.setMessage(title);
-		// set get direction button
-		alertDialogBuilder.setPositiveButton("Get Direction", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				String mapURL = "http://maps.google.com/maps?saddr=" + mLatitude + "," + mLongitude + "&daddr=" + dest;
-				Log.d("mapurl", mapURL);
-				// go to a new activity of the app
-				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-					Uri.parse(mapURL));
-				startActivity(intent);
-			}
-		});
-		// set negative button
-		alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				// cancel the alert box
-				dialog.cancel();
-			}
-		});
-		// set neutral button: Exit the activity message
-		alertDialogBuilder.setNeutralButton("Exit the app", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				// exit the screen and go to the HOME screen
-				NearByPlacesActivity.this.finish();
-			}
-		});
-
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		// show alert
-		alertDialog.show();
 	}
 
 	@Override
