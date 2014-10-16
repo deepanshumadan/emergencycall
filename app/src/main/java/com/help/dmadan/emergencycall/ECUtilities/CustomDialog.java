@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.help.dmadan.emergencycall.Activity.NearByPlacesActivity;
-
 /**
  * Created by dmadan on 10/16/14.
  */
