@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:drawable="@drawable/button_places"
+        android:id="@+id/t_bg" />
+    <item
+        android:top="0dp" android:left="30dp">
+        <bitmap android:src="@drawable/toolbar_find"
+            android:gravity="left" />
+    </item>
+</layer-list>

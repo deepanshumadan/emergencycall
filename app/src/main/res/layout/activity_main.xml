@@ -6,24 +6,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView1"
+    <LinearLayout
+        android:id="@+id/imageButtonView"
+        android:layout_width="400dp"
+        android:layout_height="350dp"
+        android:background="@color/wallet_highlighted_text_holo_light">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="23dp"
+            android:layout_width="350dp"
+            android:layout_height="320dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/linearlayout_bg"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_text_first"
+                android:layout_gravity="center"
+                style="@style/ButtonText" />
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_marginTop="10dp"
+                android:layout_width="320dp"
+                android:layout_height="300dp"
+                android:src="@drawable/button_normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/imageButtonView">
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/button_normal" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_below="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/button1"
+            android:background="@drawable/layers_button_bg"
+            android:layout_centerInParent="true"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            style="@style/ButtonText"
+            android:text="Places near me.." />
+    </LinearLayout>
 
 </RelativeLayout>
