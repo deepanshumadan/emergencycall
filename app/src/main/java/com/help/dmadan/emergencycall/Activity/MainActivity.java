@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.help.dmadan.emergencycall.ECUtilities.Features;
@@ -28,7 +27,7 @@ import com.help.dmadan.emergencycall.R;
 
 public class MainActivity extends Activity implements LocationListener {
 
-	ImageButton mImgButton;
+	Button mtButton;
 	Button mButton;
 	LocationManager mLocationManager;
 	private double mLong, mLat;
@@ -88,8 +87,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 	private void addListenerOnImageButton() {
 
-		mImgButton = (ImageButton) findViewById
-			(R.id.imageButton1);
+		mtButton = (Button) findViewById
+			(R.id.touchButton1);
 
 		// add PhoneStateListener
 		PhoneCallListener phoneListener = new PhoneCallListener();
@@ -98,7 +97,7 @@ public class MainActivity extends Activity implements LocationListener {
 		telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
 
 
-		mImgButton.setOnClickListener(new OnClickListener() {
+		mtButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				try {

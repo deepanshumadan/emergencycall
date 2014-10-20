@@ -18,25 +18,57 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_marginTop="23dp"
-            android:layout_width="350dp"
-            android:layout_height="320dp"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="23dp"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center"
             android:background="@drawable/linearlayout_bg"
             android:padding="10dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_text_first"
-                android:layout_gravity="center"
-                style="@style/ButtonText" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imageButton1"
-                android:layout_marginTop="10dp"
-                android:layout_width="320dp"
-                android:layout_height="300dp"
-                android:src="@drawable/button_normal" />
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/home_text_first"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+                    style="@style/ButtonText" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CALL"
+                        style="@style/ButtonText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SMS"
+                        style="@style/ButtonText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/touchButton1"
+                android:layout_gravity="center"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:text="@string/home_text_second"
+                style="@style/ButtonText"
+                android:drawableTop="@drawable/h_touchbutton"
+                android:paddingTop="30dp"
+                android:paddingBottom="25dp"
+                android:background="@drawable/button_touch" />
         </LinearLayout>
     </LinearLayout>
 
