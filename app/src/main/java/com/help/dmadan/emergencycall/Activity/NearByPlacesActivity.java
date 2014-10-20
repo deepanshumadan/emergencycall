@@ -24,8 +24,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -43,7 +45,8 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 	GoogleMap mGoogleMap;
 	Spinner mSprPlaceType;
-
+	Button mFilterbtn1, mFilterbtn2, mFilterbtn3, mFilterbtn4;
+	LinearLayout mFilterLayout;
 	String[] mPlaceType = null;
 	String[] mPlaceTypeName = null;
 	private ProgressBar spinner;
@@ -80,6 +83,15 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 		// Getting reference to Find Button
 		btnFind = (Button) findViewById(R.id.btn_find);
+
+		mFilterbtn1 = (Button) findViewById(R.id.filter_btn_1);
+		mFilterbtn2 = (Button) findViewById(R.id.filter_btn_2);
+		mFilterbtn3 = (Button) findViewById(R.id.filter_btn_3);
+		mFilterbtn4 = (Button) findViewById(R.id.filter_btn_4);
+
+		//linear layout for filters
+		mFilterLayout = (LinearLayout) findViewById(R.id.filter_btns);
+		mFilterLayout.setVisibility(View.GONE);
 
 		// Getting Google Play availability status
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
@@ -122,30 +134,64 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 			// Setting click event lister for the find button
 			btnFind.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
+					mFilterLayout.setVisibility(View.VISIBLE);
+				}
+			});
 
-					int selectedPosition = mSprPlaceType.getSelectedItemPosition();
-					String type = mPlaceType[selectedPosition];
+			//5 miles
+			mFilterbtn1.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onFilterClickEvent("8040");
+				}
+			});
 
-					StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-					sb.append("location=" + mLatitude + "," + mLongitude);
-					sb.append("&radius=10000");
-					sb.append("&types=" + type);
-					sb.append("&sensor=true");
-					sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
+			//10 miles
+			mFilterbtn2.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onFilterClickEvent("16900");
+				}
+			});
 
-					// Creating a new non-ui thread task to download json data
-					APIPlacesAsyncTask placesAsyncTask = new APIPlacesAsyncTask();
+			//20 miles
+			mFilterbtn3.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onFilterClickEvent("32180");
+				}
+			});
 
-					// Invokes the "doInBackground()" method of the class PlaceTask
-					placesAsyncTask.execute(sb.toString());
-
+			//50 miles
+			mFilterbtn4.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onFilterClickEvent("80460");
 				}
 			});
 		}
 	}
+
+	private void onFilterClickEvent(String radius) {
+		int selectedPosition = mSprPlaceType.getSelectedItemPosition();
+		String type = mPlaceType[selectedPosition];
+
+		StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+		sb.append("location=" + mLatitude + "," + mLongitude);
+		sb.append("&radius=" + radius);
+		sb.append("&types=" + type);
+		sb.append("&sensor=true");
+		sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
+
+		// Creating a new non-ui thread task to download json data
+		APIPlacesAsyncTask placesAsyncTask = new APIPlacesAsyncTask();
+
+		// Invokes the "doInBackground()" method of the class PlaceTask
+		placesAsyncTask.execute(sb.toString());
+	}
+
 
 	/**
 	 * A method to download json data from url
@@ -258,6 +304,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		protected void onPostExecute(List<HashMap<String, String>> list) {
 
 			spinner.setVisibility(View.GONE);
+			mFilterLayout.setVisibility(View.GONE);
 
 			// Clears all the existing markers
 			mGoogleMap.clear();
@@ -303,6 +350,9 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 					}
 				);
 			}
+
+			Toast.makeText(NearByPlacesActivity.this, "Click on place markers to get directions",
+				Toast.LENGTH_LONG).show();
 		}
 	}
 

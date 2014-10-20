@@ -15,6 +15,11 @@
     <string name="home_text_second">Tap Here</string>
 
     <string name="str_btn_find">Find</string>
+    <string name="miles5">5 miles</string>
+    <string name="miles10">10 miles</string>
+    <string name="miles20">20 miles</string>
+    <string name="miles50">50 miles</string>
+
     <string-array name="place_type">
         <item>airport</item>
         <item>atm</item>
