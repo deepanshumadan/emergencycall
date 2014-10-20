@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".NearByPlacesActivity" >
+    tools:context=".NearByPlacesActivity">
 
     <Spinner
         android:id="@+id/spr_place_type"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:textColor="@color/yellow" />
 
     <Button
         android:id="@+id/btn_find"
@@ -17,7 +18,8 @@
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/spr_place_type"
-        android:text="@string/str_btn_find" />
+        android:text="@string/str_btn_find"
+        style="@style/ButtonText" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
@@ -25,5 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/spr_place_type"
         class="com.google.android.gms.maps.SupportMapFragment" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

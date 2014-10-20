@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,6 +46,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 	String[] mPlaceType = null;
 	String[] mPlaceTypeName = null;
+	private ProgressBar spinner;
 
 	double mLatitude = 0;
 	double mLongitude = 0;
@@ -54,6 +56,9 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.nearby_places);
+
+		spinner = (ProgressBar) findViewById(R.id.progressBar1);
+		spinner.setVisibility(View.GONE);
 
 		// Array of place types
 		mPlaceType = getResources().getStringArray(R.array.place_type);
@@ -244,9 +249,15 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 			return places;
 		}
 
+		protected void onPreExecute() {
+			spinner.setVisibility(View.VISIBLE);
+		}
+
 		// Executed after the complete execution of doInBackground() method
 		@Override
 		protected void onPostExecute(List<HashMap<String, String>> list) {
+
+			spinner.setVisibility(View.GONE);
 
 			// Clears all the existing markers
 			mGoogleMap.clear();
