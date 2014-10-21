@@ -9,7 +9,7 @@
         android:id="@+id/imageButtonView"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:background="#60ef4444"
+        android:background="#30ef4444"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 

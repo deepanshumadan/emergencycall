@@ -22,8 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:id="@+id/spnr_find_view"
-        >
+        android:id="@+id/spnr_find_view">
 
         <Spinner
             android:id="@+id/spr_place_type"
@@ -43,51 +42,58 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/filter_btns"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:background="@drawable/bg"
-        android:layout_toRightOf="@+id/spnr_find_view">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/spnr_find_view">
 
-        <Button
-            android:id="@+id/filter_btn_1"
+        <LinearLayout
+            android:id="@+id/filter_btns"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/miles5"
-            android:textSize="15dp"
-            android:background="#80ef4444"
-            style="@style/ButtonText" />
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg"
+            android:weightSum="1">
 
-        <Button
-            android:id="@+id/filter_btn_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/miles10"
-            android:textSize="15dp"
-            android:layout_below="@id/filter_btn_1"
-            android:background="#80ef4444"
-            style="@style/ButtonText" />
+            <Button
+                android:id="@+id/filter_btn_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/miles5"
+                android:textSize="15dp"
+                android:background="@drawable/layers_button_bg"
+                style="@style/ButtonText"
+                android:layout_weight="0.25" />
 
-        <Button
-            android:id="@+id/filter_btn_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/filter_btn_2"
-            android:background="#80ef4444"
-            android:text="@string/miles20"
-            android:textSize="15dp"
-            style="@style/ButtonText" />
+            <Button
+                android:id="@+id/filter_btn_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/miles10"
+                android:textSize="15dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/layers_button_bg"
+                style="@style/ButtonText" />
 
-        <Button
-            android:id="@+id/filter_btn_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:layout_below="@id/filter_btn_3"
-            android:background="#80ef4444"
-            android:text="@string/miles50"
-            style="@style/ButtonText" />
+            <Button
+                android:id="@+id/filter_btn_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/layers_button_bg"
+                android:text="@string/miles20"
+                android:layout_weight="0.25"
+                android:textSize="15dp"
+                style="@style/ButtonText" />
+
+            <Button
+                android:id="@+id/filter_btn_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/layers_button_bg"
+                android:text="@string/miles50"
+                style="@style/ButtonText" />
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+
+import com.help.dmadan.emergencycall.R;
 
 /**
  * Created by dmadan on 10/16/14.
@@ -16,10 +19,10 @@ public class CustomDialog {
 	public void openAlert(final String title, final double mLatitude, final double mLongitude, final Context context, final Activity activity) {
 		final String placeAndAdress = getDestinationString(title);
 		final String dest = placeAndAdress.substring(placeAndAdress.indexOf(":"), placeAndAdress.length());
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
-
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK);
 		alertDialogBuilder.setTitle("Place near me!");
 		alertDialogBuilder.setMessage(title);
+
 		// set get direction button
 		alertDialogBuilder.setPositiveButton("Get Directions", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {

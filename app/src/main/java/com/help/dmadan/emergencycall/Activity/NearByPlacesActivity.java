@@ -47,7 +47,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 	GoogleMap mGoogleMap;
 	Spinner mSprPlaceType;
 	Button mFilterbtn1, mFilterbtn2, mFilterbtn3, mFilterbtn4;
-	RelativeLayout mFilterLayout;
+	LinearLayout mFilterLayout;
 	String[] mPlaceType = null;
 	String[] mPlaceTypeName = null;
 	private ProgressBar spinner;
@@ -91,7 +91,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		mFilterbtn4 = (Button) findViewById(R.id.filter_btn_4);
 
 		//linear layout for filters
-		mFilterLayout = (RelativeLayout) findViewById(R.id.filter_btns);
+		mFilterLayout = (LinearLayout) findViewById(R.id.filter_btns);
 		mFilterLayout.setVisibility(View.GONE);
 
 		// Getting Google Play availability status
@@ -132,6 +132,8 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 			}
 
 			locationManager.requestLocationUpdates(provider, 20000, 0, this);
+
+			mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
 
 			// Setting click event lister for the find button
 			btnFind.setOnClickListener(new OnClickListener() {
