@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 	GoogleMap mGoogleMap;
 	Spinner mSprPlaceType;
 	Button mFilterbtn1, mFilterbtn2, mFilterbtn3, mFilterbtn4;
-	LinearLayout mFilterLayout;
+	RelativeLayout mFilterLayout;
 	String[] mPlaceType = null;
 	String[] mPlaceTypeName = null;
 	private ProgressBar spinner;
@@ -90,7 +91,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		mFilterbtn4 = (Button) findViewById(R.id.filter_btn_4);
 
 		//linear layout for filters
-		mFilterLayout = (LinearLayout) findViewById(R.id.filter_btns);
+		mFilterLayout = (RelativeLayout) findViewById(R.id.filter_btns);
 		mFilterLayout.setVisibility(View.GONE);
 
 		// Getting Google Play availability status
