@@ -21,7 +21,7 @@ public class CustomDialog {
 		alertDialogBuilder.setTitle("Place near me!");
 		alertDialogBuilder.setMessage(title);
 		// set get direction button
-		alertDialogBuilder.setPositiveButton("Get Direction", new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setPositiveButton("Get Directions", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				String mapURL = "http://maps.google.com/maps?saddr=" + mLatitude + "," + mLongitude + "&daddr=" + dest;
 				Log.d("mapurl", mapURL);

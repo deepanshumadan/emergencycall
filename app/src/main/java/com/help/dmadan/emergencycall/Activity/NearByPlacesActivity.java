@@ -185,6 +185,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		sb.append("&sensor=true");
 		sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
 
+		Log.d("PlacesRequest", sb.toString());
 		// Creating a new non-ui thread task to download json data
 		APIPlacesAsyncTask placesAsyncTask = new APIPlacesAsyncTask();
 

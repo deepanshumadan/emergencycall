@@ -121,6 +121,8 @@ Organized by: Willie Tsang
     <color name="Indigo">#4B0082</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="IndianRed">#CD5C5C</color>
+    <color name="IndianRedtrans">#80CD5C5C</color>
+
     <!-- j -->
     <!-- k -->
     <color name="Khaki">#F0E68C</color>

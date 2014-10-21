@@ -21,7 +21,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        >
 
         <Spinner
             android:id="@+id/spr_place_type"
@@ -35,7 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/spr_place_type"
+            android:paddingTop="12dp"
             android:drawableTop="@drawable/toolbar_find"
+            android:background="@color/wallet_highlighted_text_holo_light"
             style="@style/ButtonText" />
     </RelativeLayout>
 
@@ -53,6 +56,7 @@
             android:text="@string/miles5"
             android:textSize="15dp"
             android:layout_below="@id/spr_place_type"
+            android:background="@color/wallet_highlighted_text_holo_light"
             style="@style/ButtonText" />
 
         <Button
@@ -62,6 +66,7 @@
             android:text="@string/miles10"
             android:textSize="15dp"
             android:layout_below="@id/filter_btn_1"
+            android:background="@color/wallet_highlighted_text_holo_light"
             style="@style/ButtonText" />
 
         <Button
@@ -69,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/filter_btn_2"
+            android:background="@color/wallet_highlighted_text_holo_light"
             android:text="@string/miles20"
             android:textSize="15dp"
             style="@style/ButtonText" />
@@ -79,6 +85,7 @@
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:layout_below="@id/filter_btn_3"
+            android:background="@color/wallet_highlighted_text_holo_light"
             android:text="@string/miles50"
             style="@style/ButtonText" />
     </LinearLayout>
