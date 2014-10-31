@@ -24,4 +24,14 @@ public class UserSettingActivity extends PreferenceActivity {
 		Intent i = new Intent(UserSettingActivity.this, MainActivity.class);
 		startActivity(i);
 	}
+
+	@Override
+	public void onPause() {
+		super.onPause();  // Always call the superclass method first
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();  // Always call the superclass method first
+	}
 }

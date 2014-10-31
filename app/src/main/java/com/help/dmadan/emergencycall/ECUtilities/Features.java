@@ -15,22 +15,7 @@ import android.widget.Toast;
 public class Features {
 
 	public static void sendSMSMessage(Context context, Double mLat, Double mLong, String mPhoneNumber) throws JSONException {
-		Log.i("Send SMS", "");
-
-		String message = GoogleRestAPIClientUsage.getLocation(mLat, mLong) + Utilities.getTime();
-
-		try {
-			SmsManager smsManager = SmsManager.getDefault();
-			smsManager.sendTextMessage(mPhoneNumber, null, "I am at " + message, null, null);
-			Toast.makeText(context, "SMS sent.",
-				Toast.LENGTH_LONG).show();
-		}
-		catch (Exception e) {
-			Toast.makeText(context,
-				"SMS faild, please try again.",
-				Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
+		new GoogleRestAPIClientUsage().getLocation(mLat, mLong, mPhoneNumber, context);
 	}
 
 	public static void callPhoneNmber(Context context, String phoneNumber) {

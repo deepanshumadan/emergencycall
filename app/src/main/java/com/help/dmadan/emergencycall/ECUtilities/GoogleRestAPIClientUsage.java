@@ -4,7 +4,10 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.help.dmadan.emergencycall.Services.GoogleRestAPIClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -14,9 +17,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
  */
 public class GoogleRestAPIClientUsage {
 
-	private static String mUserLocation = "";
+	static String mUserLocation;
 
-	public static String getLocation(Double latitude, Double longitude) throws JSONException {
+	public String getLocation(Double latitude, Double longitude, final String mPhoneNumber, final Context context) throws JSONException {
 
 		GoogleRestAPIClient.get(getRelativeUrl(latitude, longitude), null, new JsonHttpResponseHandler() {
 			@Override
@@ -28,13 +31,30 @@ public class GoogleRestAPIClientUsage {
 				catch (JSONException e) {
 					e.printStackTrace();
 				}
-				Log.d("Place response:", response.toString());
+				if (mUserLocation.equals("")) {
+					mUserLocation = "<No GPS location available>";
+				}
+				String message = mUserLocation + " at " + Utilities.getTime();
+				try {
+					SmsManager smsManager = SmsManager.getDefault();
+					smsManager.sendTextMessage(mPhoneNumber, null, "I am at " + message, null, null);
+					Toast.makeText(context, "SMS sent.",
+						Toast.LENGTH_LONG).show();
+					Log.d("current-address", message);
+				}
+				catch (Exception e) {
+					Toast.makeText(context,
+						"SMS faild, please try again.",
+						Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
 			}
 		});
+
 		return mUserLocation;
 	}
 
-	private static String getRelativeUrl(Double latitude, Double longitude) {
+	private String getRelativeUrl(Double latitude, Double longitude) {
 		String ApiKey = "AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg";
 		String url = "geocode/json?latlng=" + latitude + "," + longitude + "&key=" + ApiKey;
 		return url;
