@@ -22,6 +22,7 @@ public class CustomDialog {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK);
 		alertDialogBuilder.setTitle("Place near me!");
 		alertDialogBuilder.setMessage(title);
+		alertDialogBuilder.setIcon(R.drawable.small_icon);
 
 		// set get direction button
 		alertDialogBuilder.setPositiveButton("Get Directions", new DialogInterface.OnClickListener() {
