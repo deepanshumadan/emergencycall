@@ -28,7 +28,10 @@
         <item>pharmacy</item>
         <item>hospital</item>
         <item>taxi_stand</item>
-        <item>food</item>
+        <item>food</item>      
+        <item>movie_theater</item>
+        <item>restaurant</item>
+
     </string-array>
 
     <string-array name="place_type_name">
@@ -39,7 +42,10 @@
         <item>Pharmacy</item>
         <item>Hospital</item>
         <item>Taxi Stand</item>
-        <item>Food</item>
+        <item>Food</item>                
+        <item>Movie Theater</item>               
+        <item>Restaurant</item>
+
     </string-array>
 
 </resources>

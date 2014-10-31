@@ -14,14 +14,14 @@ import android.widget.Toast;
  */
 public class Features {
 
-	public static void sendSMSMessage(Context context, Double mLat, Double mLong) throws JSONException {
+	public static void sendSMSMessage(Context context, Double mLat, Double mLong, String mPhoneNumber) throws JSONException {
 		Log.i("Send SMS", "");
 
 		String message = GoogleRestAPIClientUsage.getLocation(mLat, mLong) + Utilities.getTime();
 
 		try {
 			SmsManager smsManager = SmsManager.getDefault();
-			//smsManager.sendTextMessage(mPhoneNumber, null, "I am at " + message, null, null);
+			smsManager.sendTextMessage(mPhoneNumber, null, "I am at " + message, null, null);
 			Toast.makeText(context, "SMS sent.",
 				Toast.LENGTH_LONG).show();
 		}
@@ -33,9 +33,9 @@ public class Features {
 		}
 	}
 
-	public static void callPhoneNmber(Context context) {
+	public static void callPhoneNmber(Context context, String phoneNumber) {
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
-		callIntent.setData(Uri.parse("tel:" + Utilities.getPhoneNumber(context)));
+		callIntent.setData(Uri.parse("tel:" + phoneNumber));
 		callIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(callIntent);
 	}

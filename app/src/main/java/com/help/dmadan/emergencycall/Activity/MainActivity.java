@@ -1,5 +1,7 @@
 package com.help.dmadan.emergencycall.Activity;
 
+import java.util.List;
+
 import org.json.JSONException;
 
 import android.content.Context;
@@ -21,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.help.dmadan.emergencycall.ECUtilities.CustomDialog;
 import com.help.dmadan.emergencycall.ECUtilities.Features;
 import com.help.dmadan.emergencycall.ECUtilities.Utilities;
 import com.help.dmadan.emergencycall.R;
@@ -100,16 +103,24 @@ public class MainActivity extends Activity implements LocationListener {
 		mtButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				try {
-					Features.sendSMSMessage(getBaseContext(), mLat, mLong);
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-				}
-				Features.callPhoneNmber(getBaseContext());
 				mPhoneNumber = Utilities.getPhoneNumber(MainActivity.this);
-				Toast.makeText(MainActivity.this, "Calling: " + mPhoneNumber,
-					Toast.LENGTH_SHORT).show();
+				if (mPhoneNumber.length() < 2) {
+					//alert to set emergency phone number
+					Log.d("entered", "entered" + mPhoneNumber);
+					CustomDialog.openSetAlert(MainActivity.this);
+				}
+				else {
+					Log.d("entered", "no entered" + mPhoneNumber);
+					try {
+						Features.sendSMSMessage(getBaseContext(), mLat, mLong, mPhoneNumber);
+					}
+					catch (JSONException e) {
+						e.printStackTrace();
+					}
+					Features.callPhoneNmber(getBaseContext(), mPhoneNumber);
+					Toast.makeText(MainActivity.this, "Calling: " + mPhoneNumber,
+						Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -32,10 +34,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.help.dmadan.emergencycall.ECUtilities.CustomDialog;
@@ -51,6 +55,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 	String[] mPlaceType = null;
 	String[] mPlaceTypeName = null;
 	private ProgressBar spinner;
+	ArrayList<LatLng> markerList;
 
 	double mLatitude = 0;
 	double mLongitude = 0;
@@ -81,6 +86,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		mSprPlaceType.setAdapter(adapter);
 
 		Button btnFind;
+		markerList = new ArrayList<LatLng>();
 
 		// Getting reference to Find Button
 		btnFind = (Button) findViewById(R.id.btn_find);
@@ -134,6 +140,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 			locationManager.requestLocationUpdates(provider, 20000, 0, this);
 
 			mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+			mGoogleMap.getUiSettings().setCompassEnabled(false);
 
 			// Setting click event lister for the find button
 			btnFind.setOnClickListener(new OnClickListener() {
@@ -174,13 +181,39 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 					onFilterClickEvent("80460");
 				}
 			});
+
+			setInitialZoom();
 		}
+	}
+
+	private void setInitialZoom() {
+		LatLng latLng = new LatLng(mLatitude, mLongitude);
+
+		mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+		mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+	}
+
+	private static void zoomToCoverAllMarkers(ArrayList<LatLng> latLngList, GoogleMap googleMap) {
+		LatLngBounds.Builder builder = new LatLngBounds.Builder();
+		/*for (Marker marker : markers)
+		{
+            builder.include(marker.getPosition());
+        }*/
+		for (LatLng marker : latLngList) {
+			builder.include(marker);
+		}
+
+		LatLngBounds bounds = builder.build();
+		int padding = 10; // offset from edges of the map in pixels
+		CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+		googleMap.moveCamera(cu);
+		googleMap.animateCamera(cu);
 	}
 
 	private void onFilterClickEvent(String radius) {
 		int selectedPosition = mSprPlaceType.getSelectedItemPosition();
 		String type = mPlaceType[selectedPosition];
-
+		markerList.clear();
 		StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
 		sb.append("location=" + mLatitude + "," + mLongitude);
 		sb.append("&radius=" + radius);
@@ -342,6 +375,9 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				//This will be displayed on taping the marker
 				markerOptions.title(name + " : " + vicinity);
 
+				//adding markers to list
+				markerList.add(latLng);
+
 				// Placing a marker on the touched position
 				mGoogleMap.addMarker(markerOptions);
 				mGoogleMap.setOnMarkerClickListener(
@@ -354,7 +390,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 					}
 				);
 			}
-
+			zoomToCoverAllMarkers(markerList, mGoogleMap);
 			Toast.makeText(NearByPlacesActivity.this, "Click on place markers to get directions",
 				Toast.LENGTH_LONG).show();
 		}
@@ -364,10 +400,6 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 	public void onLocationChanged(Location location) {
 		mLatitude = location.getLatitude();
 		mLongitude = location.getLongitude();
-		LatLng latLng = new LatLng(mLatitude, mLongitude);
-
-		mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-		mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
 	}
 
 	@Override
