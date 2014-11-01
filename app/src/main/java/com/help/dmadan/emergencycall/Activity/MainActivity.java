@@ -1,7 +1,5 @@
 package com.help.dmadan.emergencycall.Activity;
 
-import java.util.List;
-
 import org.json.JSONException;
 
 import android.content.Context;
@@ -104,13 +102,13 @@ public class MainActivity extends Activity implements LocationListener {
 			@Override
 			public void onClick(View view) {
 				mPhoneNumber = Utilities.getPhoneNumber(MainActivity.this);
-				if (mPhoneNumber.length() < 2) {
+				if (mPhoneNumber.equals("NULL")) {
 					//alert to set emergency phone number
-					Log.d("entered", "entered" + mPhoneNumber);
+					Log.d("entered7", "entered" + mPhoneNumber);
 					CustomDialog.openSetAlert(MainActivity.this);
 				}
 				else {
-					Log.d("entered", "no entered" + mPhoneNumber);
+					Log.d("entered7", "no entered" + mPhoneNumber);
 					try {
 						Features.sendSMSMessage(getBaseContext(), mLat, mLong, mPhoneNumber);
 					}
