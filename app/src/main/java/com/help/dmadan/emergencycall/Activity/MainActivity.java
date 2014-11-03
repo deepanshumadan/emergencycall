@@ -75,14 +75,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 	}
 
-	public void connectivityMessage(String msg) {
-		Context context = getApplicationContext();
-		Toast toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.setText(msg);
-		toast.show();
-	}
-
 	private void addListenerOnButton() {
 		mButton = (Button) findViewById
 			(R.id.button1);
@@ -113,7 +105,7 @@ public class MainActivity extends Activity implements LocationListener {
 			@Override
 			public void onClick(View view) {
 				mPhoneNumber = Utilities.getPhoneNumber(MainActivity.this);
-				if (mPhoneNumber.equals("NULL")) {
+				if (mPhoneNumber.equals("")) {
 					//alert to set emergency phone number
 					Log.d("entered7", "entered" + mPhoneNumber);
 					CustomDialog.openSetAlert(MainActivity.this);

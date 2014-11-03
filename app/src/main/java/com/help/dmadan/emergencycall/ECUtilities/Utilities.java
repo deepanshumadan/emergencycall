@@ -23,7 +23,7 @@ public class Utilities {
 	public static String getPhoneNumber(Context context) {
 		SharedPreferences sharedPrefs = PreferenceManager
 			.getDefaultSharedPreferences(context);
-		String phoneNumber = sharedPrefs.getString("prefPhonenumber", "NULL");
+		String phoneNumber = sharedPrefs.getString("prefPhonenumber", "");
 		Log.d("Stored phone number:", phoneNumber);
 		return phoneNumber;
 	}
