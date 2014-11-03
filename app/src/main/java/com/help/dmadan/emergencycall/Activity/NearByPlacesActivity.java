@@ -14,6 +14,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -42,6 +44,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.help.dmadan.emergencycall.ECUtilities.CheckConnectivity;
 import com.help.dmadan.emergencycall.ECUtilities.CustomDialog;
 import com.help.dmadan.emergencycall.ECUtilities.ParseJSON;
 import com.help.dmadan.emergencycall.R;
@@ -56,6 +59,8 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 	String[] mPlaceTypeName = null;
 	private ProgressBar spinner;
 	ArrayList<LatLng> markerList;
+	CheckConnectivity check;
+	Boolean conn;
 
 	double mLatitude = 0;
 	double mLongitude = 0;
@@ -68,6 +73,8 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 
 		spinner = (ProgressBar) findViewById(R.id.progressBar1);
 		spinner.setVisibility(View.GONE);
+
+		check = new CheckConnectivity();
 
 		// Array of place types
 		mPlaceType = getResources().getStringArray(R.array.place_type);
@@ -210,23 +217,38 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 		googleMap.animateCamera(cu);
 	}
 
+	public void connectivityMessage(String msg) {
+		Context context = getApplicationContext();
+		Toast toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.setText(msg);
+		toast.show();
+	}
+
 	private void onFilterClickEvent(String radius) {
-		int selectedPosition = mSprPlaceType.getSelectedItemPosition();
-		String type = mPlaceType[selectedPosition];
-		markerList.clear();
-		StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-		sb.append("location=" + mLatitude + "," + mLongitude);
-		sb.append("&radius=" + radius);
-		sb.append("&types=" + type);
-		sb.append("&sensor=true");
-		sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
+		conn = check.checkNow(this.getApplicationContext());
+		if (conn == true) {
+			int selectedPosition = mSprPlaceType.getSelectedItemPosition();
+			String type = mPlaceType[selectedPosition];
+			markerList.clear();
+			StringBuilder sb = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+			sb.append("location=" + mLatitude + "," + mLongitude);
+			sb.append("&radius=" + radius);
+			sb.append("&types=" + type);
+			sb.append("&sensor=true");
+			sb.append("&key=AIzaSyCx8RTymjqdONsHrIHFO4DEmwAR9iN4xdg");
 
-		Log.d("PlacesRequest", sb.toString());
-		// Creating a new non-ui thread task to download json data
-		APIPlacesAsyncTask placesAsyncTask = new APIPlacesAsyncTask();
+			Log.d("PlacesRequest", sb.toString());
+			// Creating a new non-ui thread task to download json data
+			APIPlacesAsyncTask placesAsyncTask = new APIPlacesAsyncTask();
 
-		// Invokes the "doInBackground()" method of the class PlaceTask
-		placesAsyncTask.execute(sb.toString());
+			// Invokes the "doInBackground()" method of the class PlaceTask
+			placesAsyncTask.execute(sb.toString());
+		}
+		else {
+			//Send a warning message to the user
+			connectivityMessage("Check Network Connection.");
+		}
 	}
 
 

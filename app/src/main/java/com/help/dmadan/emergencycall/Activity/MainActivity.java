@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.help.dmadan.emergencycall.ECUtilities.CheckConnectivity;
 import com.help.dmadan.emergencycall.ECUtilities.CustomDialog;
 import com.help.dmadan.emergencycall.ECUtilities.Features;
 import com.help.dmadan.emergencycall.ECUtilities.Utilities;
@@ -70,6 +72,15 @@ public class MainActivity extends Activity implements LocationListener {
 
 		addListenerOnButton();
 		addListenerOnImageButton();
+
+	}
+
+	public void connectivityMessage(String msg) {
+		Context context = getApplicationContext();
+		Toast toast = Toast.makeText(context, "", Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.setText(msg);
+		toast.show();
 	}
 
 	private void addListenerOnButton() {
