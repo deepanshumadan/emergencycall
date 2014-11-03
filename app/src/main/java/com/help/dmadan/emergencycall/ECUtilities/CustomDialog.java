@@ -62,7 +62,7 @@ public class CustomDialog {
 
 	public static void openSetAlert(final Activity activity) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK);
-		alertDialogBuilder.setTitle("HelpMe!");
+		alertDialogBuilder.setTitle("eHelp");
 		alertDialogBuilder.setMessage("Go to Settings and add an emergency number");
 		alertDialogBuilder.setIcon(R.drawable.small_icon);
 		alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
