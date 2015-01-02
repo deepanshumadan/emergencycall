@@ -11,9 +11,18 @@ android {
         versionCode 5
         versionName "2.2"
     }
+    signingConfigs {
+        release {
+            storeFile file("/Users/dmadan/Documents/keystore/keystore.jks")
+            storePassword "ndeep011"
+            keyAlias "alias"
+            keyPassword "ndeep011"
+        }
+    }
     buildTypes {
         release {
             runProguard false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
