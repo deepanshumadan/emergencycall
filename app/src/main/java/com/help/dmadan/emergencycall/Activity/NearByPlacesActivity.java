@@ -153,7 +153,13 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 			btnFind.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					mFilterLayout.setVisibility(View.VISIBLE);
+					if (mLatitude != 0 && mLongitude != 0) {
+						mFilterLayout.setVisibility(View.VISIBLE);
+					}
+					else {
+						Toast.makeText(getApplicationContext(), "Not able to get current location, Check internet settings",
+							Toast.LENGTH_LONG).show();
+					}
 				}
 			});
 
@@ -162,6 +168,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				@Override
 				public void onClick(View v) {
 					onFilterClickEvent("8040");
+					mFilterLayout.setVisibility(View.GONE);
 				}
 			});
 
@@ -170,6 +177,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				@Override
 				public void onClick(View v) {
 					onFilterClickEvent("16900");
+					mFilterLayout.setVisibility(View.GONE);
 				}
 			});
 
@@ -178,6 +186,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				@Override
 				public void onClick(View v) {
 					onFilterClickEvent("32180");
+					mFilterLayout.setVisibility(View.GONE);
 				}
 			});
 
@@ -186,6 +195,7 @@ public class NearByPlacesActivity extends FragmentActivity implements LocationLi
 				@Override
 				public void onClick(View v) {
 					onFilterClickEvent("80460");
+					mFilterLayout.setVisibility(View.GONE);
 				}
 			});
 
